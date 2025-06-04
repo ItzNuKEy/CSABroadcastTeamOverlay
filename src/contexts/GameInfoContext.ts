@@ -25,7 +25,6 @@ export const DEFAULT_GAME_INFO: GameContext = {
   },
   currentGameNumber: 1,
   seriesLength: 5, // default to Bo5
-  latestGoal: null,
 };
 
 

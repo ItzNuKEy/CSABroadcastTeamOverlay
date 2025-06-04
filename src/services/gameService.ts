@@ -48,11 +48,6 @@ const getDemosFromPlayers = (players: USPlayer[]) => {
     return players.map((player) => player.demos);
 };
 
-const getReplayPlayer = (players: USPlayer[], target: string): string | null => {
-    const player = players.find((p) => target.includes(p.name));
-    return player ? player.name : null;
-};
-
 // In GameService.ts
 
 let latestGoal: GoalScored | null = null;
@@ -97,6 +92,5 @@ export const GameService = {
     getShotsFromPlayers,
     getSavesFromPlayers,
     getDemosFromPlayers,
-    getReplayPlayer,
     replayTagService,
 };

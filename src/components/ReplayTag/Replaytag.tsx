@@ -1,28 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GameService } from "../../services/gameService";
 import { ReplayContainer, GoalInfo } from "../ReplayTag/Replaytag.style";
+import { GameInfoContext } from "../../contexts/GameInfoContext";
 
 export const ReplayTag = () => {
+  const { gameInfo } = useContext(GameInfoContext); // ✅ destructure from GameInfoContext
+  const isReplay = gameInfo.isReplay;
+
   const [goalInfo, setGoalInfo] = useState(GameService.replayTagService.getLatestGoal());
 
   useEffect(() => {
-    // Poll every 100ms for updates
     const interval = setInterval(() => {
       const latestGoal = GameService.replayTagService.getLatestGoal();
-      if (latestGoal) {
-        setGoalInfo(latestGoal);
-      }
-      // If latestGoal is null, do NOT clear state immediately to avoid flicker
-      // You might add a timer to clear after some delay if needed
+      setGoalInfo(latestGoal);
     }, 100);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Optionally clear goalInfo when replay ends - 
-  // You can listen to a replay-end event and clear here, or handle in GameService
-
-  if (!goalInfo) return null;
+  if (!isReplay || !goalInfo) return null;
 
   return (
     <ReplayContainer team={goalInfo.scorer.teamnum}>

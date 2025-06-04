@@ -57,12 +57,6 @@ useEffect(() => {
     });
   });
 
-  // Remove onReplayStart and onReplayEnd handlers here
-
-  return () => {
-    websocket.unsubscribe("game", "update_state");
-    // Remove unsubscribe calls for replay-start and replay-end
-  };
 }, [websocket, setGameInfo]);
 
 
