@@ -1,5 +1,6 @@
 import type { USPlayer } from "../models/UpdateState/USPlayer"
 import type { GoalScored } from "../models/GoalScored/GoalScored";
+import { WebsocketService } from "../services/WebsocketService"
 
 const getOrangeTeam = (players: USPlayer[]): USPlayer[] => {
     return players.filter((player) => player.team === 1);
@@ -52,29 +53,38 @@ const getReplayPlayer = (players: USPlayer[], target: string): string | null => 
     return player ? player.name : null;
 };
 
-// const getReplayMessage = (players: USPlayer[], target: string): string => {
-//     const player = getPlayerFromTarget(players, target);
-//     if (!player) return "REPLAY";
-//     return `REPLAY: ${player.name.toUpperCase()}!`;
-// };
+// In GameService.ts
 
 let latestGoal: GoalScored | null = null;
 
-const setLatestGoal = (goal: GoalScored | null) => {
-    latestGoal = goal;
+const replayTagService = {
+  init() {
+    WebsocketService.subscribe("game", "goal_scored", (goalState: GoalScored) => {
+      latestGoal = {
+        scorer: {
+          id: goalState.scorer.id,
+          name: goalState.scorer.name,
+          teamnum: goalState.scorer.teamnum
+        },
+        assister: goalState.assister?.name ? { name: goalState.assister.name } : undefined,
+        goalspeed: goalState.goalspeed ?? 0,
+        ball_last_touch: goalState.ball_last_touch,
+        impact_location: goalState.impact_location
+      };
+
+      console.log("[GameService] New goal recorded:", latestGoal);
+    });
+  },
+
+  getLatestGoal(): GoalScored | null {
+    return latestGoal;
+  },
+
+  clearLatestGoal() {
+    latestGoal = null;
+  }
 };
 
-const getScorerName = (): string | null => {
-    return latestGoal?.scorer?.name ?? null;
-};
-
-const getScorerTeam = (): number | null => {
-    return latestGoal?.scorer?.teamnum ?? null;
-};
-
-const getGoalSpeed = (): number | null => {
-    return latestGoal?.goalspeed ?? null;
-};
 
 export const GameService = {
     getOrangeTeam,
@@ -88,8 +98,5 @@ export const GameService = {
     getSavesFromPlayers,
     getDemosFromPlayers,
     getReplayPlayer,
-    setLatestGoal,
-    getScorerName,
-    getScorerTeam,
-    getGoalSpeed,
+    replayTagService,
 };

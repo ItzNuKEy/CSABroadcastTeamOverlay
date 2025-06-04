@@ -13,4 +13,7 @@ export interface GoalScored {
         name: string;
         teamnum: number;
     };
+    assister?: {
+        name: string;
+    }
 }

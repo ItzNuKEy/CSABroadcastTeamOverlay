@@ -18,10 +18,4 @@ export interface GameContext {
     };
     currentGameNumber: number;
     seriesLength: 5 | 7;
-    latestGoal: {
-    scorer?: string;
-    assister?: string;
-    speed?: number;
-    team: number;
-  } | null;
 };
