@@ -1,4 +1,12 @@
-# React + TypeScript + Vite
+# CSA Rocket League Broadcasting Overlay
+
+More information will be added as updates continue to come. Current component's in work and completion progress listed below. 
+
+## Main Game Overlay - 75%
+## End Game Stats - 0%
+## Control Panel - 0%
+
+More to come.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
