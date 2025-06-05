@@ -1,0 +1,20 @@
+Hey there! Since this setup is still rudemenatary and hasn't been super streamlined into an application yet, and you are reading this, then....
+
+LUCKY YOU! You are getting to use this BETA!
+
+Instructions Follow:
+
+1. Launch the app by opening any terminal within the directory of dy-overlay-rl. 
+(If not in VSCode, simply open the dy-overlay-folder, head up to your file explorer directory {Looks like a search bar.} and type in CMD)
+2. You should then be able to enter "npm start". This will start the overlay app.
+3. Check the local host it launches on, this will most likely be "http://localhost:5173" but could be different.
+4. Launch OBS.
+5. Create the same amount of scenes that you would need per overlay render. (Ex. Game Overlay {Overlay.html}; EndGameStats {EndGameStats.html})
+6. Create a browser source in each scene, the viewport height & width should be, 1920x1080. (You cannot reuse the same browser source you need to make new ones each scene.)
+7. Copy the local host link, and paste it in each browser source, at the end add a "/" and then add the following:
+        ( Will be updated depending on current Overlay Renders Available )
+    - Overlay.html
+    - EndGameStats.html 
+8. Make sure you have Rocket League and Bakkesmod launched with the SOS.dll plugin installed.
+
+        
