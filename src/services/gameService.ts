@@ -80,6 +80,42 @@ const replayTagService = {
   }
 };
 
+interface TeamPlayerStats {
+  names: string[];
+  goals: number[];
+  assists: number[];
+  saves: number[];
+  shots: number[];
+  score: number[];
+  demos: number[];
+}
+
+interface EndgamePlayerStats {
+  blue: TeamPlayerStats;
+  orange: TeamPlayerStats;
+}
+
+export const getEndgamePlayerStats = (players: USPlayer[]): EndgamePlayerStats => {
+  const getTeamStats = (teamNum: 0 | 1): TeamPlayerStats => {
+    const teamPlayers = players.filter(player => player.team === teamNum);
+
+    return {
+      names: teamPlayers.map(player => player.name),
+      goals: teamPlayers.map(player => player.goals),
+      assists: teamPlayers.map(player => player.assists),
+      saves: teamPlayers.map(player => player.saves),
+      shots: teamPlayers.map(player => player.shots),
+      score: teamPlayers.map(player => player.score),
+      demos: teamPlayers.map(player => player.demos),
+    };
+  };
+
+  return {
+    blue: getTeamStats(0),
+    orange: getTeamStats(1),
+  };
+};
+
 
 export const GameService = {
     getOrangeTeam,
@@ -93,4 +129,5 @@ export const GameService = {
     getSavesFromPlayers,
     getDemosFromPlayers,
     replayTagService,
+    getEndgamePlayerStats
 };
