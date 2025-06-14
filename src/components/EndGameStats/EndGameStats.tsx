@@ -4,10 +4,14 @@ import { GameInfoContext } from "../../contexts/GameInfoContext";
 import {
   Container,
   TeamWrapper,
-  PlayerStatColumn,
-  PlayerCell,
+  TeamColumn,
+  PlayerColumn,
   StatLabelColumn,
-  StatRow,
+  PlayerCell,
+  StatLabel,
+  PlayerName,
+  PlayerNameWrapper,
+  StatGroup,
 } from "./EndGameStats.style";
 
 export const EndGameStatsCard = () => {
@@ -20,50 +24,68 @@ export const EndGameStatsCard = () => {
         setPlayers(gameInfo.players);
       }
     }, 100);
-
     return () => clearInterval(interval);
   }, [gameInfo]);
 
   const blueTeam = players.filter((p) => p.team === 0);
   const orangeTeam = players.filter((p) => p.team === 1);
 
-  const statKeys = [ "score", "goals", "assists", "saves", "shots", "demos"];
-  const statLabels = [ "SCORE", "GOALS", "ASSISTS", "SAVES", "SHOTS", "DEMOS"];
+  const statKeys = ["score", "goals", "assists", "saves", "shots", "demos", "touches"];
+  const statLabels = ["SCORE", "GOALS", "ASSISTS", "SAVES", "SHOTS", "DEMOS", "BALL TOUCHES"];
+
+  // Dynamic font size based on player name length
+  const getFontSize = (name: string) => {
+    if (name.length > 15) return 28;
+    if (name.length > 10) return 34;
+    return 42;
+  };
 
   return (
     <Container>
       <TeamWrapper>
-        {/* Blue Team */}
-        <PlayerStatColumn>
+        {/* BLUE TEAM */}
+        <TeamColumn>
           {blueTeam.map((player) => (
-            <div key={player.name}>
-              <PlayerCell>{player.name}</PlayerCell>
-              {statKeys.map((key) => (
-                <PlayerCell key={key}>{player[key]}</PlayerCell>
-              ))}
-            </div>
+            <PlayerColumn key={player.name}>
+              <PlayerNameWrapper>
+                <PlayerName style={{ fontSize: `${getFontSize(player.name)}px` }}>
+                  {player.name}
+                </PlayerName>
+              </PlayerNameWrapper>
+              <StatGroup>
+                {statKeys.map((key) => (
+                  <PlayerCell key={key}>{player[key]}</PlayerCell>
+                ))}
+              </StatGroup>
+            </PlayerColumn>
           ))}
-        </PlayerStatColumn>
+        </TeamColumn>
 
-        {/* Stat Labels */}
+        {/* STAT LABELS */}
         <StatLabelColumn>
-          <StatRow>STATS</StatRow>
+          <StatLabel />
           {statLabels.map((label) => (
-            <StatRow key={label}>{label}</StatRow>
+            <StatLabel key={label}>{label}</StatLabel>
           ))}
         </StatLabelColumn>
 
-        {/* Orange Team */}
-        <PlayerStatColumn>
+        {/* ORANGE TEAM */}
+        <TeamColumn>
           {orangeTeam.map((player) => (
-            <div key={player.name}>
-              <PlayerCell>{player.name}</PlayerCell>
-              {statKeys.map((key) => (
-                <PlayerCell key={key}>{player[key]}</PlayerCell>
-              ))}
-            </div>
+            <PlayerColumn key={player.name}>
+              <PlayerNameWrapper>
+                <PlayerName style={{ fontSize: `${getFontSize(player.name)}px` }}>
+                  {player.name}
+                </PlayerName>
+              </PlayerNameWrapper>
+              <StatGroup>
+                {statKeys.map((key) => (
+                  <PlayerCell key={key}>{player[key]}</PlayerCell>
+                ))}
+              </StatGroup>
+            </PlayerColumn>
           ))}
-        </PlayerStatColumn>
+        </TeamColumn>
       </TeamWrapper>
     </Container>
   );
