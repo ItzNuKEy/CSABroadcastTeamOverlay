@@ -12,6 +12,7 @@ export const Container = styled.div`
   font-size: 24px;
   box-sizing: border-box;
   padding-bottom: 74px; /* initial distance from bottom, adjust freely */
+  position: relative; /* <-- add this */
 `;
 
 export const TeamWrapper = styled.div`
@@ -19,7 +20,7 @@ export const TeamWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: flex-end; /* makes each column bottom-aligned */
-  gap: 40px;
+  gap: 0px;
 `;
 
 export const TeamColumn = styled.div`
@@ -39,8 +40,7 @@ export const StatLabelColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 64.5px;
-  margin-bottom: 12.5px;
+  margin-bottom: -39px;
 `;
 
 export const PlayerCell = styled.div`
@@ -66,14 +66,6 @@ export const PlayerName = styled.div`
   transform: translateY(-40px); 
 `;
 
-export const StatLabel = styled.div`
-  width: 250px;
-  text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: #ccc;
-  text-transform: uppercase;
-`;
 
 export const PlayerNameWrapper = styled.div`
   height: 110px;  /* increased from 60px to allow shifting */
@@ -89,4 +81,128 @@ export const StatGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 41px;
+`;
+
+export const StatLabelRow = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+
+  /* Manual nudge to center everything visually */
+  transform: translateX(-32px);  // adjust left/right manually
+`;
+export const StatIcon = styled.img`
+  width: 57px;
+  height: 57px;
+  /* Remove position: absolute, left, top, transform */
+  filter: brightness(0) invert(1);
+`;
+
+export const StatLabelText = styled.div`
+  font-size: 28px;
+  font-weight: bold;
+  color: #ccc;
+  text-transform: uppercase;
+  text-align: center;
+`;
+
+export const StatLabel = styled.div`
+  font-size: 28px;
+  font-weight: bold;
+  color: #ccc;
+  text-transform: uppercase;
+  margin-bottom: 3px; // just a light nudge
+`;
+
+export const LineStackWrapper = styled.div`
+  position: absolute;
+  bottom: 57px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0.75;
+  z-index: 0; /* push behind */
+`;
+
+export const Underline = styled.div<{ width?: string; height?: string }>`
+  background-color:rgb(70, 70, 70);
+  width: ${({ width }) => width || "60%"};
+  height: ${({ height }) => height || "2px"};
+`;
+
+export const SliderWrapper = styled.div`
+  display: flex;
+  width: 320px;  // match PlayerCell width or desired size
+  height: 10px;
+  background: #222;  // background for empty bar
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px auto 0 auto; // center and small top margin
+`;
+
+export const BlueBar = styled.div<{ widthPercent: number }>`
+  background-color: #0088ff;  // Blue team color
+  width: ${({ widthPercent }) => widthPercent}%;
+  transition: width 0.3s ease;
+`;
+
+export const OrangeBar = styled.div<{ widthPercent: number }>`
+  background-color: #ff6600;  // Orange team color
+  width: ${({ widthPercent }) => widthPercent}%;
+  transition: width 0.3s ease;
+`;
+
+export const BlueTeamNameBacker = styled.div`
+  position: absolute;
+  top: 145px; /* Adjust to match PlayerNameWrapper */
+  left: 0;
+  width: 840px; /* Half of 1920px (for blue side) */
+  height: 150px;
+  background: linear-gradient(to top, #0088ff, transparent);
+  pointer-events: none;
+  border-bottom-right-radius: 20px;
+  border-top-left-radius: 12px; /* optional for smooth corners */
+  border-top-right-radius: 12px;
+  z-index: 0;
+  overflow: hidden; /* clip the ::after line */
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 13px; /* thickness of the line */
+    background: linear-gradient(-90deg, #0088ff, #00ccff); /* blue gradient */
+  }
+`;
+
+
+export const OrangeTeamNameBacker = styled.div`
+  position: absolute;
+  top: 145px; /* Adjust to match PlayerNameWrapper */
+  right: 0;
+  width: 840px; /* Half of 1920px (for orange side) */
+  height: 150px;
+  background: linear-gradient(to top, #ff6600, transparent);
+  pointer-events: none;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 12px;  /* optional, for smoother corners */
+  border-top-right-radius: 12px;
+  z-index: 0;
+  overflow: hidden; /* clip the ::after line */
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 13px; /* thickness of the line */
+    background: linear-gradient(90deg, #ff6600, #ff9933); /* orange gradient */
+  }
 `;
