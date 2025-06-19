@@ -13,6 +13,7 @@ export const Container = styled.div`
   box-sizing: border-box;
   padding-bottom: 74px; /* initial distance from bottom, adjust freely */
   position: relative; /* <-- add this */
+  z-index: 1;
 `;
 
 export const TeamWrapper = styled.div`
@@ -204,5 +205,24 @@ export const OrangeTeamNameBacker = styled.div`
     right: 0;
     height: 13px; /* thickness of the line */
     background: linear-gradient(90deg, #ff6600, #ff9933); /* orange gradient */
+  }
+`;
+
+export const MVPBadge = styled.div<{ team: "blue" | "orange" }>`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    position: absolute;
+    top: -20px;
+    width: 42px;
+    height: 42px;
+    z-index: 2;
+    filter: ${({ team }) =>
+      team === "blue"
+        ? "drop-shadow(0 0 4px #00bfff)"
+        : "drop-shadow(0 0 4px #ff6600)"};
   }
 `;
